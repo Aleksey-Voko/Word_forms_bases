@@ -14,8 +14,8 @@ def read_src_bs(f_name: str) -> list:
     """
     word_forms_bases = []
 
-    with open(f_name, encoding='cp1251') as fin:
-        src_group_word_form_list = (x.strip() for x in fin.read().split('\n\n'))
+    with open(f_name, encoding='cp1251') as f_in:
+        src_group_word_form_list = (x.strip() for x in f_in.read().split('\n\n'))
 
         for src_group_word_form in src_group_word_form_list:
             src_title_word_form, *src_word_forms = src_group_word_form.split('\n')
@@ -48,14 +48,20 @@ def read_src_bs(f_name: str) -> list:
     return word_forms_bases
 
 
-def save_dicts_to_yaml(in_dicts, out_file: str, encoding='utf-8', flow_style=True):
+def save_dicts_to_yaml(in_dicts, f_name, encoding='utf-8', flow_style=True):
     yaml = YAML(pure=True)
     yaml.default_flow_style = flow_style
-    Path(out_file).parent.mkdir(parents=True, exist_ok=True)
-    with open(Path(out_file), 'w', encoding=encoding) as f_out:
+    Path(f_name).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(f_name), 'w', encoding=encoding) as f_out:
         yaml.dump_all(in_dicts, f_out)
+
+
+def save_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
+    Path(f_name).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(f_name), 'w', encoding=encoding) as f_out:
+        f_out.write('\n\n'.join(str(x) for x in in_dicts) + '\n')
 
 
 if __name__ == '__main__':
     bases = read_src_bs('BS/BS_001_121220/src_dict/БС 29.11.20.txt')
-    print('\n\n'.join(str(x) for x in bases[:20]))
+    save_bs_dicts_to_txt(bases, 'BS/BS_001_121220/out/БС 12.12.20.txt')
