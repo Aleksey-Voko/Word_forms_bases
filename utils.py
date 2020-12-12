@@ -1,20 +1,18 @@
 from pathlib import Path
-from pprint import pprint
 
 from ruamel.yaml import YAML
 
 from word_form import TitleWordForm, WordForm, GroupWordForm
 
 
-def read_src_bs(f_name: str) -> list:
+def read_src_bs(f_name: str, encoding='cp1251'):
     """
     Читает БС.
     :param f_name: имя файла БС
+    :param encoding: encoding f_in
     :return: word_forms_bases (список объектов GroupWordForm)
     """
-    word_forms_bases = []
-
-    with open(f_name, encoding='cp1251') as f_in:
+    with open(f_name, encoding=encoding) as f_in:
         src_group_word_form_list = (x.strip() for x in f_in.read().split('\n\n'))
 
         for src_group_word_form in src_group_word_form_list:
@@ -43,9 +41,7 @@ def read_src_bs(f_name: str) -> list:
             # group_word_form
             group_word_form = GroupWordForm(title_word_form, word_forms)
 
-            word_forms_bases.append(group_word_form)
-
-    return word_forms_bases
+            yield group_word_form
 
 
 def save_dicts_to_yaml(in_dicts, f_name, encoding='utf-8', flow_style=True):
@@ -68,5 +64,8 @@ def get_string_list_from_file(f_name, encoding='utf-8'):
             yield line.rstrip()
 
 
-if __name__ == '__main__':
-    bases = read_src_bs('BS/BS_001_121220/src_dict/БС 29.11.20.txt')
+def save_list_to_file(input_list: list, out_file: str, encoding='utf-8'):
+    Path(out_file).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(out_file), 'w', encoding=encoding) as f_out:
+        for line in input_list:
+            f_out.write(str(line) + '\n')
