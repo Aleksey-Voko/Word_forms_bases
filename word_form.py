@@ -79,6 +79,18 @@ class TitleWordForm(WordForm):
         self._note = note
 
     @property
+    def clean_string(self):
+        return ' '.join(filter(
+            None,
+            [
+                self._name.replace('*', '').lower(),
+                self._idf,
+                ' '.join(self._info),
+                self._note
+            ]
+        )).strip()
+
+    @property
     def dict_form(self):
         return OrderedDict({
             'name': self._name,
@@ -107,6 +119,26 @@ class GroupWordForm:
             str(self._title_word_form),
             '\n'.join(str(x) for x in self._word_forms),
         )))
+
+    def __eq__(self, other):
+        self_name = self._title_word_form.clean_string
+        other_name = other.title_word_form.clean_string
+        return self_name == other_name
+
+    def __ne__(self, other):
+        self_name = self._title_word_form.clean_string
+        other_name = other.title_word_form.clean_string
+        return self_name != other_name
+
+    def __gt__(self, other):
+        self_name = self._title_word_form.clean_string
+        other_name = other.title_word_form.clean_string
+        return self_name > other_name
+
+    def __lt__(self, other):
+        self_name = self._title_word_form.clean_string
+        other_name = other.title_word_form.clean_string
+        return self_name < other_name
 
     @property
     def title_word_form(self):

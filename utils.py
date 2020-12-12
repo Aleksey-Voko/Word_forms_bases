@@ -62,6 +62,11 @@ def save_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
         f_out.write('\n\n'.join(str(x) for x in in_dicts) + '\n')
 
 
+def get_string_list_from_file(f_name, encoding='utf-8'):
+    with open(Path(f_name), encoding=encoding) as f_in:
+        for line in f_in:
+            yield line.rstrip()
+
+
 if __name__ == '__main__':
     bases = read_src_bs('BS/BS_001_121220/src_dict/БС 29.11.20.txt')
-    save_bs_dicts_to_txt(bases, 'BS/BS_001_121220/out/БС 12.12.20.txt')
