@@ -58,5 +58,4 @@ def save_dicts_to_yaml(in_dicts, out_file: str, encoding='utf-8', flow_style=Tru
 
 if __name__ == '__main__':
     bases = read_src_bs('BS/BS_001_121220/src_dict/БС 29.11.20.txt')
-    bases_dicts = [x.list_form for x in bases]
-    save_dicts_to_yaml(bases_dicts[:30], 'БС_29_11_20.yaml', flow_style=False)
+    print('\n\n'.join(str(x) for x in bases[:20]))

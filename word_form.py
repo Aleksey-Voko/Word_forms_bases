@@ -9,7 +9,10 @@ class WordForm:
         self._idf = idf
 
     def __repr__(self):
-        return ' '.join([self._name.ljust(L_JUST_SIZE), self._idf]).strip()
+        return ' '.join(filter(
+            None,
+            [self._name.ljust(L_JUST_SIZE), self._idf]
+        )).strip()
 
     @property
     def name(self):
@@ -49,8 +52,15 @@ class TitleWordForm(WordForm):
         self._note = note
 
     def __repr__(self):
-        # WTF: заполняет отсутствующие пробелами
-        return ' '.join([self._name.ljust(L_JUST_SIZE), self._idf, ' '.join(self._info), self._note]).strip()
+        return ' '.join(filter(
+            None,
+            [
+                self._name.ljust(L_JUST_SIZE),
+                self._idf,
+                ' '.join(self._info),
+                self._note
+            ]
+        )).strip()
 
     @property
     def info(self):
@@ -91,6 +101,12 @@ class GroupWordForm:
     def __init__(self, title_word_form: TitleWordForm, word_forms: list):
         self._title_word_form = title_word_form
         self._word_forms = word_forms
+
+    def __repr__(self):
+        return '\n'.join(filter(None, (
+            str(self._title_word_form),
+            '\n'.join(str(x) for x in self._word_forms),
+        )))
 
     @property
     def title_word_form(self):
