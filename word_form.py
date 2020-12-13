@@ -92,21 +92,17 @@ class TitleWordForm(WordForm):
 
     @property
     def dict_form(self):
-        return OrderedDict({
-            'name': self._name,
-            'idf': self._idf,
-            'info': self._info,
-            'note': self._note,
-        })
+        return (
+                super().dict_form |
+                OrderedDict({
+                    'info': self._info,
+                    'note': self._note,
+                })
+        )
 
     @property
     def list_form(self):
-        return [
-            self._name,
-            self._idf,
-            self._info,
-            self._note,
-        ]
+        return super().list_form + [self._info, self._note]
 
 
 class GroupWordForm:
