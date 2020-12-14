@@ -160,4 +160,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# User template
 src_dict/
+tests/
