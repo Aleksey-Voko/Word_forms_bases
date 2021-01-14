@@ -3,7 +3,7 @@ from pathlib import Path
 
 from ruamel.yaml import YAML
 
-from word_form import TitleWordForm, WordForm, GroupWordForm
+from BS.word_form import TitleWordForm, WordForm, GroupWordForm
 
 
 def read_src_bs(f_name: str, encoding='cp1251'):

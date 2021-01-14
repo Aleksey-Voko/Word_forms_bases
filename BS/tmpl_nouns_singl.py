@@ -1,6 +1,5 @@
 # Существительные единственное число
-
-from word_form import WordForm
+from BS.word_form import WordForm
 
 
 def get_singl_word_forms(src_dict) -> list:

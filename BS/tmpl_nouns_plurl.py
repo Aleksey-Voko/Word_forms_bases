@@ -1,6 +1,5 @@
 # Существительные множественное число
-
-from word_form import WordForm
+from BS.word_form import WordForm
 
 
 def get_plurl_word_forms(src_dict, singl_word_forms) -> list:
@@ -26,6 +25,7 @@ def get_plurl_word_forms(src_dict, singl_word_forms) -> list:
         'I2': get_plurl_i2,
         'I2*': get_plurl_i2_prim,
         'I3': get_plurl_i3,
+        'I3*': get_plurl_i3_prim,
         'I4': get_plurl_i4,
         'I4*': get_plurl_i4_prim,
         'I4+III7': get_plurl_i4_and_iii7,
@@ -414,6 +414,23 @@ def get_plurl_i3(_, inf_0: str, singl_word_forms: list) -> list:
     return word_forms
 
 
+# I3*
+def get_plurl_i3_prim(name: str, inf_0: str, _) -> list:
+    if inf_0 == 'неод':
+        smnv = f'{name}'
+    else:
+        smnv = f'{name[:-1]}ей'
+    word_forms = [
+        WordForm(f'{name}', '.СмнИ'),
+        WordForm(f'{name[:-1]}ей', '.СмнР'),
+        WordForm(f'{name[:-1]}ам', '.СмнД'),
+        WordForm(smnv, '.СмнВ'),
+        WordForm(f'{name[:-1]}ами', '.СмнТ'),
+        WordForm(f'{name[:-1]}ах', '.СмнП'),
+    ]
+    return word_forms
+
+
 # I4
 def get_plurl_i4(_, inf_0: str, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
@@ -450,20 +467,28 @@ def get_plurl_i4_prim(name: str, inf_0: str, _) -> list:
 
 
 # I4+III7
-def get_plurl_i4_and_iii7(_, __, singl_word_forms: list) -> list:
+def get_plurl_i4_and_iii7(_, inf_0: str, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
+    if inf_0 == 'неод':
+        smnv1 = WordForm(f'{ser[:-1]}и', '.СмнВ1')
+        smnv2 = WordForm(f'{ser}', '.СмнВ2'),
+        smnv = ''
+    else:
+        smnv1 = ''
+        smnv2 = ''
+        smnv = WordForm(f'{ser[:-1]}и', '.СмнВ'),
     word_forms = [
         WordForm(f'{ser[:-1]}и', '.СмнИ1'),
         WordForm(f'{ser}', '.СмнИ2'),
-        WordForm(f'{ser[:-1]}и', '.СмнР'),
+        WordForm(f'{ser[:-1]}ей', '.СмнР'),
         WordForm(f'{ser[:-1]}ям', '.СмнД'),
-        WordForm(f'{ser[:-1]}и', '.СмнВ1'),
-        WordForm(f'{ser}', '.СмнВ2'),
-        WordForm(f'{ser[:-1]}и', '.СмнВ3'),
+        smnv1,
+        smnv2,
+        smnv,
         WordForm(f'{ser[:-1]}ями', '.СмнТ'),
         WordForm(f'{ser[:-1]}ях', '.СмнП'),
     ]
-    return word_forms
+    return list(filter(None, word_forms))
 
 
 # I6
@@ -534,20 +559,28 @@ def get_plurl_ii1_prim_and_6_prim(name: str, _, __) -> list:
 
 
 # II1+IV1
-def get_plurl_ii1_and_iv1(_, __, singl_word_forms: list) -> list:
+def get_plurl_ii1_and_iv1(_, inf_0: str, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
+    if inf_0 == 'неод':
+        smnv1 = WordForm(f'{ser[:-1]}ы', '.СмнВ1')
+        smnv2 = WordForm(f'{ser}', '.СмнВ2'),
+        smnv = ''
+    else:
+        smnv1 = ''
+        smnv2 = ''
+        smnv = WordForm(f'{ser[:-1]}ов', '.СмнВ3'),
     word_forms = [
         WordForm(f'{ser[:-1]}ы', '.СмнИ1'),
         WordForm(f'{ser}', '.СмнИ2'),
         WordForm(f'{ser[:-1]}ов', '.СмнР'),
         WordForm(f'{ser[:-1]}ам', '.СмнД'),
-        WordForm(f'{ser[:-1]}ы', '.СмнВ1'),
-        WordForm(f'{ser}', '.СмнВ2'),
-        WordForm(f'{ser[:-1]}ов', '.СмнВ3'),
+        smnv1,
+        smnv2,
+        smnv,
         WordForm(f'{ser[:-1]}ами', '.СмнТ'),
         WordForm(f'{ser[:-1]}ах', '.СмнП'),
     ]
-    return word_forms
+    return list(filter(None, word_forms))
 
 
 # II3
@@ -635,15 +668,16 @@ def get_plurl_iii2_prim(name: str, inf_0: str, _) -> list:
 
 
 # III7
-def get_plurl_iii7(_, __, singl_word_forms: list) -> list:
+def get_plurl_iii7(name, __, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
     word_forms = [
         WordForm(f'{ser}', '.СмнИ'),
-        WordForm(f'{ser[:-1]}ей', '.СмнР'),
-        WordForm(f'{ser[:-1]}ям', '.СмнД'),
-        WordForm(f'{ser}', '.СмнВ'),
-        WordForm(f'{ser[:-1]}ями', '.СмнТ'),
-        WordForm(f'{ser[:-1]}ях', '.СмнП'),
+        WordForm(f'{name[:-1]}ей', '.СмнР'),
+        WordForm(f'{name[:-1]}ям', '.СмнД'),
+        WordForm(f'{ser}', '.СмнВ1'),
+        WordForm(f'{name[:-1]}ей', '.СмнВ2'),
+        WordForm(f'{name[:-1]}ями', '.СмнТ'),
+        WordForm(f'{name[:-1]}ях', '.СмнП'),
     ]
     return word_forms
 
@@ -791,18 +825,15 @@ def get_plurl_iv6_prim_and_ii5_prim(name: str, _, __) -> list:
 
 
 # IV6+I13
-def get_plurl_iv6_and_i13(_, inf_0: str, singl_word_forms: list) -> list:
+def get_plurl_iv6_and_i13(_, __, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
-    if inf_0 == 'неод':
-        smnv = f'{ser}'
-    else:
-        smnv = f'{ser[:-1]}и'
     word_forms = [
         WordForm(f'{ser}', '.СмнИ1'),
         WordForm(f'{ser[:-1]}и', '.СмнИ2'),
         WordForm(f'{ser[:-1]}', '.СмнР'),
         WordForm(f'{ser[:-1]}ам', '.СмнД'),
-        WordForm(smnv, '.СмнВ'),
+        WordForm(f'{ser}', '.СмнВ1'),
+        WordForm(f'{ser[:-1]}и', '.СмнВ2'),
         WordForm(f'{ser[:-1]}ами', '.СмнТ'),
         WordForm(f'{ser[:-1]}ах', '.СмнП'),
     ]
