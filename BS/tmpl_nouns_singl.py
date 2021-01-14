@@ -167,7 +167,7 @@ def get_singl_i3(name: str, inf_0: str) -> list:
     return word_forms
 
 
-# # I3#
+# I3#
 def get_singl_i3_sharp(name: str, inf_0: str) -> list:
     if inf_0 == 'неод':
         sev = f'{name}'

@@ -163,3 +163,5 @@ fabric.properties
 # User template
 src_dict/
 tests/
+tmpl/
+tmpl.py

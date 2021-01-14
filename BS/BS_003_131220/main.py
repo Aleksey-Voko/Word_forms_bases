@@ -1,7 +1,8 @@
 from BS.tmpl_nouns_plurl import get_plurl_word_forms
 from BS.tmpl_nouns_singl import get_singl_word_forms
-from utils import read_src_bs, save_bs_dicts_to_txt, get_dicts_from_csv_file
-from word_form import GroupWordForm, TitleWordForm
+from BS.utils import (read_src_bs, save_bs_dicts_to_txt,
+                      get_dicts_from_csv_file)
+from BS.word_form import GroupWordForm, TitleWordForm
 
 
 def alphabetical_order():
@@ -9,12 +10,15 @@ def alphabetical_order():
     в соответствии с алфавитным порядком ЗС.
     Поэтому высылаю док-т Кунсткамера2.txt"""
     kunstkamera_2 = read_src_bs('src_dict/Кунсткамера2.txt', encoding='utf-8')
-    save_bs_dicts_to_txt(sorted(kunstkamera_2), 'out/Кунсткамера2.txt', encoding='utf-8')
+    save_bs_dicts_to_txt(sorted(kunstkamera_2), 'out/Кунсткамера2.txt',
+                         encoding='utf-8')
 
 
 def add_groups_to_bs():
-    """3. Используя списки на вкладке "Добавить группы в БС" док-та Существительные.xlsx ,
-    а также шаблоны, приведённые на вкладках "ШАБЛОНЫ ед.ч." и "ШАБЛОНЫ мн.ч." того же док-та,
+    """3. Используя списки на вкладке "Добавить группы в БС"
+    док-та Существительные.xlsx ,
+    а также шаблоны, приведённые на вкладках "ШАБЛОНЫ ед.ч." и "ШАБЛОНЫ мн.ч."
+    того же док-та,
     создать док-т Добавить группы в БС. Сущ-ные.txt ."""
     src_groups = get_dicts_from_csv_file('Добавить группы в БС.csv')
     add_groups_to_bs_list = []
@@ -22,7 +26,9 @@ def add_groups_to_bs():
     for src_dict in src_groups:
         add_groups_to_bs_list.append(get_group_word_form(src_dict))
 
-    save_bs_dicts_to_txt(sorted(add_groups_to_bs_list), 'out/Добавить группы в БС. Сущ-ные.txt', encoding='utf-8')
+    save_bs_dicts_to_txt(sorted(add_groups_to_bs_list),
+                         'out/Добавить группы в БС. Сущ-ные.txt',
+                         encoding='utf-8')
 
     word_forms_bases = list(read_src_bs('src_dict/БС 13.12.20.txt'))
     word_forms_bases += add_groups_to_bs_list
