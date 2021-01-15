@@ -471,7 +471,7 @@ def get_plurl_i4_and_iii7(_, inf_0: str, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
     if inf_0 == 'неод':
         smnv1 = WordForm(f'{ser[:-1]}и', '.СмнВ1')
-        smnv2 = WordForm(f'{ser}', '.СмнВ2'),
+        smnv2 = WordForm(f'{ser}', '.СмнВ2')
         smnv = ''
     else:
         smnv1 = ''
@@ -563,7 +563,7 @@ def get_plurl_ii1_and_iv1(_, inf_0: str, singl_word_forms: list) -> list:
     ser = list(filter(lambda x: x.idf == '.СеР', singl_word_forms))[0].name
     if inf_0 == 'неод':
         smnv1 = WordForm(f'{ser[:-1]}ы', '.СмнВ1')
-        smnv2 = WordForm(f'{ser}', '.СмнВ2'),
+        smnv2 = WordForm(f'{ser}', '.СмнВ2')
         smnv = ''
     else:
         smnv1 = ''
@@ -674,8 +674,7 @@ def get_plurl_iii7(name, __, singl_word_forms: list) -> list:
         WordForm(f'{ser}', '.СмнИ'),
         WordForm(f'{name[:-1]}ей', '.СмнР'),
         WordForm(f'{name[:-1]}ям', '.СмнД'),
-        WordForm(f'{ser}', '.СмнВ1'),
-        WordForm(f'{name[:-1]}ей', '.СмнВ2'),
+        WordForm(f'{name[:-1]}ей', '.СмнВ1'),
         WordForm(f'{name[:-1]}ями', '.СмнТ'),
         WordForm(f'{name[:-1]}ях', '.СмнП'),
     ]
