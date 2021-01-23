@@ -1,8 +1,11 @@
 import csv
+import re
 from pathlib import Path
+from pprint import pprint
 
 from ruamel.yaml import YAML
 
+from BS.socket_base import SocketWordForm, SocketSubGroupWordForm, SocketGroupWordForm
 from BS.word_form import TitleWordForm, WordForm, GroupWordForm
 
 
@@ -45,6 +48,95 @@ def read_src_bs(f_name: str, encoding='cp1251'):
             yield group_word_form
 
 
+def read_src_socket_bs(f_name: str, encoding='cp1251'):
+    """
+    Читает БГ.
+    :param f_name: имя файла БГ
+    :param encoding: encoding f_in
+    :return: список объектов SocketGroupWordForm
+    """
+    with open(f_name, encoding=encoding) as f_in:
+        src_socket_group_list = (
+            x.strip() for x in f_in.read().split('---')
+        )
+
+        for src_socket_group in src_socket_group_list:
+            if src_socket_group:
+                src_socket_sub_group_list = (
+                    x.strip() for x in src_socket_group.split('\n\n')
+                )
+
+                socket_group_list = []
+                for src_socket_sub_group in src_socket_sub_group_list:
+                    socket_word_form_list = []
+                    for src_socket_form in src_socket_sub_group.split('\n'):
+                        # etml_note
+                        pattern = re.compile(r'^.+ (\*\?|\*\?\?|\*!|\*\*)$')
+                        result = re.search(pattern, src_socket_form)
+                        if result:
+                            etml_note = result.group(1)
+                            l_res = len(result.group(1))
+                            src_socket_form = src_socket_form[:-l_res].strip()
+                        else:
+                            pattern = re.compile(r'^.+ (\* ?(<=|\|<=) ?.+)$')
+                            result = re.search(pattern, src_socket_form)
+                            if result:
+                                etml_note = result.group(1)
+                                l_res = len(result.group(1))
+                                src_socket_form = src_socket_form[:-l_res].strip()
+                            else:
+                                etml_note = ''
+
+                        # note
+                        if ' * ' in src_socket_form:
+                            src_socket_form, src_note = [
+                                x.strip() for x in src_socket_form.split(' * ')
+                            ]
+                            note = ' '.join(['*', src_note])
+                        else:
+                            note = ''
+
+                        # idf + info
+                        if ' .' in src_socket_form:
+                            src_socket_form, src_idf_info = [
+                                x.strip() for x in src_socket_form.split(' .')
+                            ]
+                            idf_info = ''.join(['.', src_idf_info])
+                            idf, *info, = idf_info.split()
+                        else:
+                            idf = ''
+                            info = []
+
+                        # invisible
+                        if src_socket_form.startswith('*'):
+                            invisible = '*'
+                            src_socket_form = src_socket_form[2:]
+                        else:
+                            invisible = ''
+
+                        # root_index
+                        pattern = re.compile(r'^.+ (\d(\**|!))$')
+                        result = re.search(pattern, src_socket_form)
+                        if result:
+                            root_index = result.group(1).strip()
+                            l_res = len(result.group(1))
+                            name = src_socket_form[:-l_res].strip()
+                        else:
+                            root_index = ''
+                            name = src_socket_form
+
+                        socket_word_form = SocketWordForm(
+                            invisible, name, root_index, idf, info, note,
+                            etml_note)
+
+                        socket_word_form_list.append(socket_word_form)
+
+                    socket_sub_group = SocketSubGroupWordForm(socket_word_form_list)
+                    socket_group_list.append(socket_sub_group)
+
+                yield SocketGroupWordForm(socket_group_list)
+
+
 def save_dicts_to_yaml(in_dicts, f_name, encoding='utf-8', flow_style=True):
     yaml = YAML(pure=True)
     yaml.default_flow_style = flow_style
@@ -84,3 +176,7 @@ def get_fieldnames_from_csv_file(f_name, encoding='utf-8',
                                  newline='', delimiter=','):
     with open(Path(f_name), encoding=encoding, newline=newline) as f_in:
         return csv.DictReader(f_in, delimiter=delimiter).fieldnames
+
+
+if __name__ == '__main__':
+    read_src_socket_bs('BS_005_150121/src_dict/БГ 08.01.21.txt')

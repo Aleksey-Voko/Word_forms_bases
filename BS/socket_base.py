@@ -2,26 +2,36 @@ from collections import OrderedDict
 
 
 class SocketWordForm:
-    def __init__(self, name, root_index, idf, info: list, note, et_note):
+    def __init__(self, invisible, name, root_index, idf, info: list, note, etml_note):
+        self.__invisible = invisible
         self.__name = name
         self.__root_index = root_index
         self.__idf = idf
         self.__info = info
         self.__note = note
-        self.__et_note = et_note
+        self.__etml_note = etml_note
 
     def __repr__(self):
         return ' '.join(filter(
             None,
             [
+                self.__invisible,
                 self.__name,
                 self.__root_index,
                 self.__idf,
                 ' '.join(self.__info),
                 self.__note,
-                self.__et_note,
+                self.__etml_note,
             ]
         )).strip()
+
+    @property
+    def invisible(self):
+        return self.__invisible
+
+    @invisible.setter
+    def invisible(self, invisible):
+        self.__invisible = invisible
 
     @property
     def name(self):
@@ -65,46 +75,49 @@ class SocketWordForm:
 
     @property
     def et_note(self):
-        return self.__et_note
+        return self.__etml_note
 
     @et_note.setter
     def et_note(self, et_note):
-        self.__et_note = et_note
+        self.__etml_note = et_note
 
     @property
     def clean_string(self):
         return ' '.join(filter(
             None,
             [
-                self.__name.replace('*', '').lower().strip(),
+                self.__invisible,
+                self.__name.lower(),
                 self.__root_index,
                 self.__idf,
                 ' '.join(self.__info),
                 self.__note,
-                self.__et_note,
+                self.__etml_note,
             ]
         )).strip()
 
     @property
     def dict_form(self):
         return OrderedDict({
+            'invisible': self.__invisible,
             'name': self.__name,
             'root_index': self.__root_index,
             'idf': self.__idf,
             'info': self.__info,
             'note': self.__note,
-            'etymological_note': self.__et_note,
+            'etymological_note': self.__etml_note,
         })
 
     @property
     def list_form(self):
         return [
+            self.__invisible,
             self.__name,
             self.__root_index,
             self.__idf,
             self.__info,
             self.__note,
-            self.__et_note,
+            self.__etml_note,
         ]
 
 
@@ -129,4 +142,4 @@ class SocketGroupWordForm:
         self.__sub_groups = sub_groups
 
     def __repr__(self):
-        return '\n'.join(str(x) for x in self.__sub_groups)
+        return '\n\n'.join(str(x) for x in self.__sub_groups)
