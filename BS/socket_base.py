@@ -2,8 +2,7 @@ from collections import OrderedDict
 
 
 class SocketWordForm:
-    def __init__(self, invisible, name, root_index, idf, info: list, note, etml_note):
-        self.__invisible = invisible
+    def __init__(self, name, root_index, idf, info: list, note, etml_note):
         self.__name = name
         self.__root_index = root_index
         self.__idf = idf
@@ -15,7 +14,6 @@ class SocketWordForm:
         return ' '.join(filter(
             None,
             [
-                self.__invisible,
                 self.__name,
                 self.__root_index,
                 self.__idf,
@@ -24,14 +22,6 @@ class SocketWordForm:
                 self.__etml_note,
             ]
         )).strip()
-
-    @property
-    def invisible(self):
-        return self.__invisible
-
-    @invisible.setter
-    def invisible(self, invisible):
-        self.__invisible = invisible
 
     @property
     def name(self):
@@ -86,8 +76,7 @@ class SocketWordForm:
         return ' '.join(filter(
             None,
             [
-                self.__invisible,
-                self.__name.lower(),
+                self.__name.replace('*', '').strip().lower(),
                 self.__root_index,
                 self.__idf,
                 ' '.join(self.__info),
@@ -99,7 +88,6 @@ class SocketWordForm:
     @property
     def dict_form(self):
         return OrderedDict({
-            'invisible': self.__invisible,
             'name': self.__name,
             'root_index': self.__root_index,
             'idf': self.__idf,
@@ -111,7 +99,6 @@ class SocketWordForm:
     @property
     def list_form(self):
         return [
-            self.__invisible,
             self.__name,
             self.__root_index,
             self.__idf,
@@ -143,3 +130,10 @@ class SocketGroupWordForm:
 
     def __repr__(self):
         return '\n\n'.join(str(x) for x in self.__sub_groups)
+
+    @property
+    def socket_word_forms(self):
+        word_forms = []
+        for sub_group in self.__sub_groups:
+            word_forms += sub_group.socket_word_forms
+        return word_forms

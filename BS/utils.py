@@ -4,7 +4,8 @@ from pathlib import Path
 
 from ruamel.yaml import YAML
 
-from BS.socket_base import SocketWordForm, SocketSubGroupWordForm, SocketGroupWordForm
+from BS.socket_base import (SocketWordForm, SocketSubGroupWordForm,
+                            SocketGroupWordForm)
 from BS.word_form import TitleWordForm, WordForm, GroupWordForm
 
 
@@ -16,14 +17,16 @@ def read_src_bs(f_name: str, encoding='cp1251'):
     :return: word_forms_bases (список объектов GroupWordForm)
     """
     with open(f_name, encoding=encoding) as f_in:
-        src_group_word_form_list = (x.strip() for x in f_in.read().split('\n\n'))
+        src_group_word_form_list = (
+            x.strip() for x in f_in.read().split('\n\n'))
 
         for src_group_word_form in src_group_word_form_list:
             src_title_word_form, *src_word_forms = src_group_word_form.split('\n')
 
             # title_word_form
             if '.*' in src_title_word_form:
-                src_title_word_form_w_note, src_note = [x.strip() for x in src_title_word_form.split(' .* ')]
+                src_title_word_form_w_note, src_note = [
+                    x.strip() for x in src_title_word_form.split(' .* ')]
                 note = ' '.join(['.*', src_note])
             else:
                 src_title_word_form_w_note = src_title_word_form
@@ -128,14 +131,24 @@ def read_src_socket_bs(f_name: str, encoding='cp1251'):
                         if result:
                             root_index = result.group(1).strip()
                             l_res = len(result.group(1))
-                            name = src_socket_form[:-l_res].strip()
+                            # name = src_socket_form[:-l_res].strip()
+                            name = ' '.join(filter(
+                                None, [
+                                    invisible,
+                                    src_socket_form[:-l_res].strip()
+                                ]
+                            ))
                         else:
                             root_index = ''
-                            name = src_socket_form
+                            # name = src_socket_form
+                            name = ' '.join(filter(
+                                None,
+                                [invisible, src_socket_form]
+                            ))
 
-                        socket_word_form = SocketWordForm(
-                            invisible, name, root_index, idf, info, note,
-                            etml_note)
+                        socket_word_form = SocketWordForm(name, root_index,
+                                                          idf, info, note,
+                                                          etml_note)
 
                         socket_word_form_list.append(socket_word_form)
 
