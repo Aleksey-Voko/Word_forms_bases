@@ -41,3 +41,65 @@ tmpl_word_forms_bases = [
         ],
     },
 ]
+
+tmpl_socket_word_forms_bases = [
+    # ---
+    # socket
+    [
+        # sub_group
+        [
+            {
+                'name': '* 5',
+                'root_index': '',
+                'idf': '',
+                'info': [],
+                'note': '',
+                'etymological_note': '* <= five',
+            },
+            {
+                'name': 'файф-о-клок',
+                'root_index': '2',
+                'idf': '.СеИ',
+                'info': [
+                    'неод',
+                    'мI1',
+                    'мнI1',
+                ],
+                'note': '',
+                'etymological_note': '',
+            },
+        ],
+        # sub_group
+        [
+            {
+                'name': '* short',
+                'root_index': '',
+                'idf': '',
+                'info': [],
+                'note': '',
+                'etymological_note': '',
+            },
+            {
+                'name': 'шорт-лист',
+                'root_index': '2*',
+                'idf': '.СеИ',
+                'info': [
+                    'неод',
+                    'мI1',
+                    'мнII1',
+                ],
+                'note': '',
+                'etymological_note': '',
+            },
+            {
+                'name': 'SMS',
+                'root_index': '3',
+                'idf': '',
+                'info': [],
+                'note': '* short message service',
+                'etymological_note': '',
+            },
+        ],
+    ],
+    # ---
+]
