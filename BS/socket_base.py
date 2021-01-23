@@ -106,3 +106,19 @@ class SocketWordForm:
             self.__note,
             self.__et_note,
         ]
+
+
+class SocketSubGroupWordForm:
+    def __init__(self, socket_word_forms: list):
+        self.__socket_word_forms = socket_word_forms
+
+    def __repr__(self):
+        return '\n'.join(str(x) for x in self.__socket_word_forms)
+
+    @property
+    def socket_word_forms(self):
+        return self.__socket_word_forms
+
+    @socket_word_forms.setter
+    def socket_word_forms(self, socket_word_forms):
+        self.__socket_word_forms = socket_word_forms
