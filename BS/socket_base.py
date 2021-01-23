@@ -122,3 +122,11 @@ class SocketSubGroupWordForm:
     @socket_word_forms.setter
     def socket_word_forms(self, socket_word_forms):
         self.__socket_word_forms = socket_word_forms
+
+
+class SocketGroupWordForm:
+    def __init__(self, sub_groups: list):
+        self.__sub_groups = sub_groups
+
+    def __repr__(self):
+        return '\n'.join(str(x) for x in self.__sub_groups)
