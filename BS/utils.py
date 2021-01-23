@@ -1,7 +1,6 @@
 import csv
 import re
 from pathlib import Path
-from pprint import pprint
 
 from ruamel.yaml import YAML
 
@@ -46,6 +45,15 @@ def read_src_bs(f_name: str, encoding='cp1251'):
             group_word_form = GroupWordForm(title_word_form, word_forms)
 
             yield group_word_form
+
+
+def save_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
+    """
+    Сохраняет саисок объектов GroupWordForm в документ БС
+    """
+    Path(f_name).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(f_name), 'w', encoding=encoding) as f_out:
+        f_out.write('\n\n'.join(str(x) for x in in_dicts) + '\n')
 
 
 def read_src_socket_bs(f_name: str, encoding='cp1251'):
@@ -137,18 +145,23 @@ def read_src_socket_bs(f_name: str, encoding='cp1251'):
                 yield SocketGroupWordForm(socket_group_list)
 
 
+def save_socket_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
+    """
+    Сохраняет саисок объектов SocketGroupWordForm в документ БГ
+    """
+    Path(f_name).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(f_name), 'w', encoding=encoding) as f_out:
+        f_out.write('---\n\n')
+        f_out.write('\n\n---\n\n'.join(str(x) for x in in_dicts))
+        f_out.write('\n\n---')
+
+
 def save_dicts_to_yaml(in_dicts, f_name, encoding='utf-8', flow_style=True):
     yaml = YAML(pure=True)
     yaml.default_flow_style = flow_style
     Path(f_name).parent.mkdir(parents=True, exist_ok=True)
     with open(Path(f_name), 'w', encoding=encoding) as f_out:
         yaml.dump_all(in_dicts, f_out)
-
-
-def save_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
-    Path(f_name).parent.mkdir(parents=True, exist_ok=True)
-    with open(Path(f_name), 'w', encoding=encoding) as f_out:
-        f_out.write('\n\n'.join(str(x) for x in in_dicts) + '\n')
 
 
 def get_string_list_from_file(f_name, encoding='utf-8'):
@@ -176,7 +189,3 @@ def get_fieldnames_from_csv_file(f_name, encoding='utf-8',
                                  newline='', delimiter=','):
     with open(Path(f_name), encoding=encoding, newline=newline) as f_in:
         return csv.DictReader(f_in, delimiter=delimiter).fieldnames
-
-
-if __name__ == '__main__':
-    read_src_socket_bs('BS_005_150121/src_dict/БГ 08.01.21.txt')
