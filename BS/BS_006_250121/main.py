@@ -5,7 +5,7 @@ from BS.word_form import GroupWordForm, TitleWordForm
 
 def get_socket_group_word_form(src_dict: dict) -> GroupWordForm:
     name = src_dict['name']
-    info = [src_dict['Inf_0'], ''.join(list(filter(None, [
+    info = [src_dict['Inf_0'], ' '.join(list(filter(None, [
         src_dict['Inf_1'],
         src_dict['Inf_2'],
         src_dict['Inf_3'],
