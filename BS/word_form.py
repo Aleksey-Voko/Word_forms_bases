@@ -11,7 +11,7 @@ class WordForm:
     def __repr__(self):
         return ' '.join(filter(
             None,
-            [self.__name.ljust(L_JUST_SIZE), self.__idf]
+            [self.name.ljust(L_JUST_SIZE), self.idf]
         )).strip()
 
     @property
@@ -55,10 +55,10 @@ class TitleWordForm(WordForm):
         return ' '.join(filter(
             None,
             [
-                self.__name.ljust(L_JUST_SIZE),
-                self.__idf,
-                ' '.join(self.__info),
-                self.__note
+                self.name.ljust(L_JUST_SIZE),
+                self.idf,
+                ' '.join(self.info),
+                self.note
             ]
         )).strip()
 
@@ -83,10 +83,10 @@ class TitleWordForm(WordForm):
         return ' '.join(filter(
             None,
             [
-                self.__name.replace('*', '').lower(),
-                self.__idf,
-                ' '.join(self.__info),
-                self.__note
+                self.name.replace('*', '').lower(),
+                self.idf,
+                ' '.join(self.info),
+                self.note
             ]
         )).strip()
 
@@ -95,14 +95,14 @@ class TitleWordForm(WordForm):
         return (
                 super().dict_form |
                 OrderedDict({
-                    'info': self.__info,
-                    'note': self.__note,
+                    'info': self.info,
+                    'note': self.note,
                 })
         )
 
     @property
     def list_form(self):
-        return super().list_form + [self.__info, self.__note]
+        return super().list_form + [self.info, self.note]
 
 
 class GroupWordForm:
@@ -112,27 +112,27 @@ class GroupWordForm:
 
     def __repr__(self):
         return '\n'.join(filter(None, (
-            str(self.__title_word_form),
-            '\n'.join(str(x) for x in self.__word_forms),
+            str(self.title_word_form),
+            '\n'.join(str(x) for x in self.word_forms),
         )))
 
     def __eq__(self, other):
-        self_name = self.__title_word_form.clean_string
+        self_name = self.title_word_form.clean_string
         other_name = other.title_word_form.clean_string
         return self_name == other_name
 
     def __ne__(self, other):
-        self_name = self.__title_word_form.clean_string
+        self_name = self.title_word_form.clean_string
         other_name = other.title_word_form.clean_string
         return self_name != other_name
 
     def __gt__(self, other):
-        self_name = self.__title_word_form.clean_string
+        self_name = self.title_word_form.clean_string
         other_name = other.title_word_form.clean_string
         return self_name > other_name
 
     def __lt__(self, other):
-        self_name = self.__title_word_form.clean_string
+        self_name = self.title_word_form.clean_string
         other_name = other.title_word_form.clean_string
         return self_name < other_name
 
@@ -155,13 +155,13 @@ class GroupWordForm:
     @property
     def dict_form(self):
         return OrderedDict({
-            'title_word_form': self.__title_word_form.dict_form,
-            'word_forms': [x.dict_form for x in self.__word_forms],
+            'title_word_form': self.title_word_form.dict_form,
+            'word_forms': [x.dict_form for x in self.word_forms],
         })
 
     @property
     def list_form(self):
         return [
-            self.__title_word_form.list_form,
-            [x.list_form for x in self.__word_forms]
+            self.title_word_form.list_form,
+            [x.list_form for x in self.word_forms]
         ]
