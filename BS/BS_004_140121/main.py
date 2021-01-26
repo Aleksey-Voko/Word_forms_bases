@@ -56,9 +56,6 @@ def save_groups_to_bs():
                          'out/Добавить группы в БС. Сущ-ные.txt',
                          encoding='utf-8')
 
-    save_bs_dicts_to_txt(sorted(add_groups_to_bs_list),
-                         'out/Добавить группы в БС. Сущ-ные.txt')
-
 
 if __name__ == '__main__':
     save_groups_to_bs()
