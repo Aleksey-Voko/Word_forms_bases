@@ -1,4 +1,4 @@
-# Word forms bases
+# The base of word forms and linguistic Armageddon
 2020
 
 ---
@@ -13,3 +13,4 @@
 
 * [BS_004_140121](BS/BS_004_140121)
 * [BS_005_150121](BS/BS_005_150121)
+* [BS_006_250121](BS/BS_006_250121)
