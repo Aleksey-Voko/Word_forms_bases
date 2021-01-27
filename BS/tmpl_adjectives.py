@@ -802,6 +802,7 @@ def get_superlative_pi1(src_dict) -> list:
         WordForm(f'{name[:-2]}ейших', '.ППмнР'),
         WordForm(f'{name[:-2]}ейшим', '.ППмнД'),
         WordForm(f'{name[:-2]}ейшие', '.ППмнВ'),
+        WordForm(f'{name[:-2]}ейшими', '.ППмнТ'),
         WordForm(f'{name[:-2]}ейших', '.ППмнП'),
     ]
     return word_forms
