@@ -119,7 +119,7 @@ def read_src_socket_bs(f_name: str, encoding='cp1251'):
                             info = []
 
                         # invisible
-                        if src_socket_form.startswith('*'):
+                        if src_socket_form.startswith('* '):
                             invisible = '*'
                             src_socket_form = src_socket_form[2:]
                         else:
