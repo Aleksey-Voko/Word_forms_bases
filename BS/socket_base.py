@@ -110,10 +110,15 @@ class SocketWordForm:
 
 class SocketSubGroupWordForm:
     def __init__(self, socket_word_forms: list):
+        self.__title_word_form = socket_word_forms[0]
         self.__socket_word_forms = socket_word_forms
 
     def __repr__(self):
         return '\n'.join(str(x) for x in self.__socket_word_forms)
+
+    @property
+    def title_word_form(self):
+        return self.__title_word_form
 
     @property
     def socket_word_forms(self):
@@ -125,11 +130,15 @@ class SocketSubGroupWordForm:
 
 
 class SocketGroupWordForm:
-    def __init__(self, sub_groups: list):
-        self.__sub_groups = sub_groups
+    def __init__(self, s_groups: list):
+        self.__sub_groups = s_groups
 
     def __repr__(self):
         return '\n\n'.join(str(x) for x in self.__sub_groups)
+
+    @property
+    def sub_groups(self):
+        return self.__sub_groups
 
     @property
     def socket_word_forms(self):
