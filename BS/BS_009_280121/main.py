@@ -24,7 +24,8 @@ def fix_adjusted_participles():
                              key=lambda x: x.replace('*', '').lower()),
                       'out/Адъектированные причастия.txt'
                       )
-    save_list_to_file(socket_group_28_01, 'out/БГ 28.01.21.txt')
+    save_list_to_file(socket_group_28_01, 'out/БГ 28.01.21.txt',
+                      encoding='cp1251')
 
 
 if __name__ == '__main__':
