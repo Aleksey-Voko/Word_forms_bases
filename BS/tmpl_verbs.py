@@ -2321,12 +2321,11 @@ def past_participle_dp1(src_dict) -> list:
     if not name.endswith(('ся', 'сь')):
         word_forms = [
             WordForm(f'{gpm[:-1]}в', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
+            WordForm(f'{gpm[:-1]}вши', '.ДП*'),
         ]
     else:
         word_forms = [
             WordForm(f'{gpm[:-3]}вшись', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
         ]
     return word_forms
 
@@ -2345,13 +2344,12 @@ def past_participle_dp2(src_dict) -> list:
     if not name.endswith(('ся', 'сь')):
         word_forms = [
             WordForm(f'{gpm[:-1]}в', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
+            WordForm(f'{gpm[:-1]}вши', '.ДП*'),
             WordForm(f'{gnb2e[:-3]}я', '.ДП!'),
         ]
     else:
         word_forms = [
             WordForm(f'{gpm[:-3]}вшись', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
             WordForm(f'{gnb2e[:-5]}ясь', '.ДП!'),
         ]
     return word_forms
@@ -2371,13 +2369,12 @@ def past_participle_dp3(src_dict) -> list:
     if not name.endswith(('ся', 'сь')):
         word_forms = [
             WordForm(f'{gpm[:-1]}в', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
+            WordForm(f'{gpm[:-1]}вши', '.ДП*'),
             WordForm(f'{gnb2e[:-3]}а', '.ДП!'),
         ]
     else:
         word_forms = [
             WordForm(f'{gpm[:-3]}вшись', '.ДП'),
-            WordForm(f'{gpm[:-3]}вши', '.ДП*'),
             WordForm(f'{gnb2e[:-5]}ась', '.ДП!'),
         ]
     return word_forms
@@ -2455,7 +2452,6 @@ def past_participle_dp9_and_10(src_dict) -> list:
     else:
         word_forms = [
             WordForm(f'{name[:-4]}вшись', '.ДП1'),
-            WordForm(f'{name[:-4]}вши', '.ДП1*'),
             WordForm(f'{name[:-6]}шись', '.ДП2'),
         ]
     return word_forms
