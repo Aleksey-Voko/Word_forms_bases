@@ -146,8 +146,9 @@ def read_src_socket_bs(f_name: str, encoding='cp1251'):
                                 [invisible, src_socket_form]
                             ))
 
-                        socket_word_form = SocketWordForm(name, root_index,
-                                                          idf, info, note,
+                        socket_word_form = SocketWordForm(invisible, name,
+                                                          root_index, idf,
+                                                          info, note,
                                                           etml_note)
 
                         socket_word_form_list.append(socket_word_form)
