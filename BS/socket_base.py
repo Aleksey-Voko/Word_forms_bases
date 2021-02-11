@@ -16,7 +16,7 @@ class SocketWordForm:
         return ' '.join(filter(
             None,
             [
-                self.__invisible,
+                # self.__invisible,
                 self.__name,
                 self.__root_index,
                 self.__idf,
