@@ -220,7 +220,7 @@ def find_all_multi_rooted_words_from_bs():
                             socket_form.name,
                             socket_form.idf,
                             ' '.join(socket_form.info),
-                            socket_form.note,
+                            socket_form.note.replace('* ', ''),
                         ])))
 
     multi_root_bs_forms = []
@@ -233,7 +233,7 @@ def find_all_multi_rooted_words_from_bs():
                 title_form.name,
                 title_form.idf,
                 ' '.join(title_form.info),
-                title_form.note,
+                title_form.note.replace('.* ', ''),
             ]))
         if src_title_form in multi_root_bg_forms:
             print(title_form)
