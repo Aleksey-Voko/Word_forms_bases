@@ -1,7 +1,8 @@
 import pandas as pd
 
 from BS.utils import (read_src_socket_bs, get_dicts_from_csv_file,
-                      save_list_to_file, read_src_bs, get_socket_word_form)
+                      save_list_to_file, read_src_bs, get_socket_word_form,
+                      get_string_list_from_file, get_bs_title_word_form)
 
 
 def get_root_index_data_set():
@@ -233,7 +234,8 @@ def find_all_multi_rooted_words_from_bs():
                 title_form.name,
                 title_form.idf,
                 ' '.join(title_form.info),
-                title_form.note.replace('.* ', ''),
+                (title_form.note.replace('.* ', '')
+                 if '<' not in title_form.note else None),
             ]))
         if src_title_form in multi_root_bg_forms:
             print(title_form)
@@ -247,5 +249,22 @@ def find_all_multi_rooted_words_from_bs():
     save_list_to_file(multi_root_bs_forms, 'out/Многокорневые слова БС.txt')
 
 
+def check_socket_bs():
+    multi_root_words = get_dicts_from_csv_file(
+        'out/Многокорневые слова.csv')
+    multi_root_bs_forms = get_string_list_from_file(
+        'out/Многокорневые слова БС.txt')
+    multi_root_bs_forms = [get_bs_title_word_form(x).name for x in multi_root_bs_forms]
+
+    for multi_root_word in multi_root_words:
+        for root_index_key in list(multi_root_word)[1:]:
+            if multi_root_word[root_index_key]:
+                socket_form = get_socket_word_form(
+                    multi_root_word[root_index_key]
+                )
+                if socket_form.name not in multi_root_bs_forms:
+                    print(socket_form)
+
+
 if __name__ == '__main__':
-    find_all_multi_rooted_words_from_bs()
+    check_socket_bs()

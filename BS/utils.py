@@ -9,6 +9,22 @@ from BS.socket_base import (SocketWordForm, SocketSubGroupWordForm,
 from BS.word_form import TitleWordForm, WordForm, GroupWordForm
 
 
+def get_bs_title_word_form(src_title_word_form):
+    if '.*' in src_title_word_form:
+        src_title_word_form_w_note, src_note = [
+            x.strip() for x in src_title_word_form.split(' .* ')]
+        note = ' '.join(['.*', src_note])
+    else:
+        src_title_word_form_w_note = src_title_word_form
+        note = ''
+    name, *idf_info, = src_title_word_form_w_note.split()
+    if idf_info:
+        idf, *info = idf_info
+    else:
+        idf, *info = '', ''
+    return TitleWordForm(name, idf, info, note)
+
+
 def read_src_bs(f_name: str, encoding='cp1251'):
     """
     Читает БС.
@@ -23,20 +39,7 @@ def read_src_bs(f_name: str, encoding='cp1251'):
         for src_group_word_form in src_group_word_form_list:
             src_title_word_form, *src_word_forms = src_group_word_form.split('\n')
 
-            # title_word_form
-            if '.*' in src_title_word_form:
-                src_title_word_form_w_note, src_note = [
-                    x.strip() for x in src_title_word_form.split(' .* ')]
-                note = ' '.join(['.*', src_note])
-            else:
-                src_title_word_form_w_note = src_title_word_form
-                note = ''
-            name, *idf_info, = src_title_word_form_w_note.split()
-            if idf_info:
-                idf, *info = idf_info
-            else:
-                idf, *info = '', ''
-            title_word_form = TitleWordForm(name, idf, info, note)
+            title_word_form = get_bs_title_word_form(src_title_word_form)
 
             # word_forms
             word_forms = []
