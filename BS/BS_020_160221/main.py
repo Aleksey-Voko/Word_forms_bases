@@ -16,7 +16,7 @@ def get_replays_in_groups():
         )))
 
         if replays_names:
-            replays_in_groups.append(str(socket_word_forms[0]))
+            replays_in_groups.append(str(socket_group.socket_word_forms[0]))
             for sub_group in socket_group.sub_groups:
                 flag = True
                 for word_form in sub_group.socket_word_forms:
