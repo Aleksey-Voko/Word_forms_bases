@@ -1,6 +1,6 @@
 import pandas as pd
 
-from BS.utils import (read_src_socket_bs, get_dicts_from_csv_file, read_src_bs, get_socket_word_form, save_list_to_file)
+from BS.utils import (read_src_socket_bs, save_list_to_file)
 
 
 def get_root_index_data_set():
@@ -61,54 +61,38 @@ def get_root_index_data_set():
     res_df.to_csv('out/Многокорневые слова.csv')
 
 
-def find_all_multi_rooted_words_from_bs():
-    multi_root_words = get_dicts_from_csv_file(
-        'out/Многокорневые слова.csv')
+def get_replays_in_groups():
+    socket_group_list = read_src_socket_bs(
+        'src_dict/БГ 16.02.21.txt')
 
-    word_forms_bases = list(read_src_bs('src_dict/БС 14.02.21 изм.txt'))
+    replays_in_groups = []
 
-    multi_root_bg_forms = []
+    for socket_group in socket_group_list:
+        socket_word_forms = socket_group.socket_word_forms
+        socket_word_forms = [x for x in socket_word_forms if not x.invisible]
+        socket_names = [x.name for x in socket_word_forms]
+        replays_names = sorted(list(set(
+            [x for x in socket_names if socket_names.count(x) > 1]
+        )))
 
-    for multi_root_word in multi_root_words:
-        for root_index_key in list(multi_root_word)[1:]:
-            if multi_root_word[root_index_key]:
-                socket_form = get_socket_word_form(
-                    multi_root_word[root_index_key]
-                )
-                multi_root_bg_forms.append(
-                    ' '.join(filter(
-                        None,
-                        [
-                            socket_form.name,
-                            socket_form.idf,
-                            ' '.join(socket_form.info),
-                            socket_form.note.replace('* ', ''),
-                        ])))
+        if replays_names:
+            replays_in_groups.append(str(socket_group.socket_word_forms[0]))
+            for sub_group in socket_group.sub_groups:
+                flag = True
+                for word_form in sub_group.socket_word_forms:
+                    if word_form.name in replays_names:
+                        if flag:
+                            replays_in_groups.append(' '.join([
+                                '!',
+                                str(sub_group.title_word_form),
+                            ]))
+                            flag = False
+                        replays_in_groups.append(str(word_form))
 
-    multi_root_bs_forms = []
+            replays_in_groups.append('')
 
-    for group_word_form in word_forms_bases:
-        title_form = group_word_form.title_word_form
-        src_title_form = ' '.join(filter(
-            None,
-            [
-                title_form.name,
-                title_form.idf,
-                ' '.join(title_form.info),
-                (title_form.note.replace('.* ', '')
-                 if '<' not in title_form.note else None),
-            ]))
-        if src_title_form in multi_root_bg_forms:
-            print(title_form)
-            multi_root_bs_forms.append(str(title_form))
-
-    multi_root_bs_forms = sorted(
-        multi_root_bs_forms,
-        key=lambda x: x.replace('*', '').lower().strip()
-    )
-
-    save_list_to_file(multi_root_bs_forms, 'out/Многокорневые слова БС.txt')
+    save_list_to_file(replays_in_groups, 'out/Повторы в группах.txt')
 
 
 if __name__ == '__main__':
-    find_all_multi_rooted_words_from_bs()
+    get_replays_in_groups()
