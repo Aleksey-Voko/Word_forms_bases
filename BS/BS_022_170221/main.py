@@ -26,6 +26,11 @@ def get_homonyms_bg():
     homonyms = []
 
     for socket_group in socket_group_list:
+        group_names = [
+            x.name.replace('*', '').strip()
+            for x in socket_group.socket_word_forms
+        ]
+
         for sub_group in socket_group.sub_groups:
             title_word_form = sub_group.title_word_form
             for word_form in sub_group.socket_word_forms:
@@ -33,7 +38,10 @@ def get_homonyms_bg():
                         not word_form.invisible
                         and not word_form.root_index
                 ):
-                    if word_form.name.replace('*', '').strip() in socket_names:
+                    raw_name = word_form.name.replace('*', '').strip()
+                    if (
+                            group_names.count(raw_name) == 1
+                            and raw_name in socket_names):
                         if str(word_form) == str(title_word_form):
                             homonyms.append(str(word_form))
                         else:
@@ -72,4 +80,4 @@ def get_homonyms_bs():
 
 
 if __name__ == '__main__':
-    get_homonyms_bs()
+    get_homonyms_bg()
