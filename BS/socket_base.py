@@ -160,3 +160,7 @@ class SocketGroupWordForm:
         for sub_group in self.__sub_groups:
             word_forms += sub_group.socket_word_forms
         return word_forms
+
+    @property
+    def title_word_form(self):
+        return self.socket_word_forms[0]
