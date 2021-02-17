@@ -28,7 +28,7 @@ def get_homonyms_bg():
     for socket_group in socket_group_list:
         group_names = [
             x.name.replace('*', '').strip()
-            for x in socket_group.socket_word_forms
+            for x in socket_group.socket_word_forms if not x.invisible
         ]
 
         for sub_group in socket_group.sub_groups:
@@ -47,13 +47,17 @@ def get_homonyms_bg():
                         else:
                             homonyms.append(' < '.join([
                                 str(word_form),
-                                title_word_form.name,
+                                str(title_word_form),
                             ]))
 
-    save_list_to_file(
-        sorted(homonyms, key=lambda x: x.replace('*', '').strip().lower()),
-        'out/Омонимы БГ.txt'
-    )
+    sort_homonyms = sorted(homonyms,
+                           key=lambda x: x.replace('*', '').strip().lower())
+    save_list_to_file(sort_homonyms, 'out/Омонимы БГ.txt')
+
+    loner_names = [x.split()[0] for x in sort_homonyms]
+    loner_homonyms = [x for x in sort_homonyms
+                      if loner_names.count(x.split()[0]) == 1]
+    save_list_to_file(loner_homonyms, 'out/Единичные омонимы.txt')
 
 
 def get_homonyms_bs():
