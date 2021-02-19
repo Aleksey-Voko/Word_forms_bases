@@ -39,7 +39,7 @@ def get_remaining_repetitions():
             bs_form.name,
             bs_form.idf,
             ' '.join(bs_form.info),
-            bs_form.note
+            bs_form.note.replace('.*', '').strip()
         ])))
 
     remaining_repetitions = []
@@ -51,7 +51,7 @@ def get_remaining_repetitions():
             get_socket_word_form(x).name,
             get_socket_word_form(x).idf,
             ' '.join(get_socket_word_form(x).info),
-            get_socket_word_form(x).note,
+            get_socket_word_form(x).note.replace('*', '').strip(),
         ]))
         for x in replays_in_groups
     ]
