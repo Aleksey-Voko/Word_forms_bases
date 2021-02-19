@@ -26,6 +26,26 @@ class SocketWordForm:
             ]
         )).strip()
 
+    def __eq__(self, other):
+        self_name = self.clean_string
+        other_name = other.clean_string
+        return self_name == other_name
+
+    def __ne__(self, other):
+        self_name = self.clean_string
+        other_name = other.clean_string
+        return self_name != other_name
+
+    def __gt__(self, other):
+        self_name = self.clean_string
+        other_name = other.clean_string
+        return self_name > other_name
+
+    def __lt__(self, other):
+        self_name = self.clean_string
+        other_name = other.clean_string
+        return self_name < other_name
+
     @property
     def invisible(self):
         return self.__invisible
