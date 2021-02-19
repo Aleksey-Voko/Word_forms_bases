@@ -1,4 +1,4 @@
-from BS.utils import save_list_to_file, get_string_list_from_file, get_bs_title_word_form
+from BS.utils import save_list_to_file, get_string_list_from_file, get_bs_title_word_form, get_socket_word_form
 
 
 def get_replays_in_groups():
@@ -46,6 +46,16 @@ def get_remaining_repetitions():
 
     replays_in_groups = get_string_list_from_file(
         'out/Повторы в группах (без повторов).txt')
+    replays_in_groups = [
+        ' '.join(filter(None, [
+            get_socket_word_form(x).name,
+            get_socket_word_form(x).idf,
+            ' '.join(get_socket_word_form(x).info),
+            get_socket_word_form(x).note,
+        ]))
+        for x in replays_in_groups
+    ]
+
     for replay in replays_in_groups:
         if replay not in homonyms:
             remaining_repetitions.append(replay)
@@ -66,4 +76,4 @@ def get_remaining_homonyms():
 
 
 if __name__ == '__main__':
-    get_remaining_homonyms()
+    get_remaining_repetitions()
