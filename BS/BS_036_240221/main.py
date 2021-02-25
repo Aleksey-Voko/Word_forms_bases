@@ -12,8 +12,8 @@ def get_homonyms_bs():
             for line in group.split('\n')[1:]:
                 if line.startswith('!'):
                     title_word_sub_group = line
-                    title_name_sub_group = get_socket_word_form(
-                        title_word_sub_group.replace('!', '').strip()).name
+                    title_name_sub_group = str(get_socket_word_form(
+                        title_word_sub_group.replace('!', '').strip()))
                 else:
                     word_form = get_socket_word_form(line)
                     replays_in_groups_spec_note.append(
