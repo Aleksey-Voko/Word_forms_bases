@@ -13,7 +13,7 @@ def get_homonyms_bs():
                 if line.startswith('!'):
                     title_word_sub_group = line
                     title_name_sub_group = str(get_socket_word_form(
-                        title_word_sub_group.replace('!', '').strip()))
+                        title_word_sub_group[2:]))
                 else:
                     word_form = get_socket_word_form(line)
                     replays_in_groups_spec_note.append(
@@ -43,23 +43,8 @@ def get_homonyms_bs():
     for homonym in homonyms_bs:
         title_form = get_bs_title_word_form(homonym)
 
-        # имеющие специальное примечание (".* <")
-        if title_form.note.startswith('.* <'):
-            string_form = ' '.join(filter(
-                None,
-                [
-                    title_form.name,
-                    title_form.idf,
-                    ' '.join(title_form.info),
-                    title_form.note.replace('.* <', '').strip()
-                ]))
-            if string_form in replays_in_groups_spec_note:
-                homonyms_spec_note_relevant.append(homonym)
-            else:
-                homonyms_spec_note_not_relevant.append(homonym)
-
-        # НЕ имеющие специальное примечание (".* <")
-        else:
+        # без примечаний
+        if not title_form.note:
             string_form = ' '.join(filter(
                 None,
                 [
@@ -72,6 +57,37 @@ def get_homonyms_bs():
                 homonyms_relevant.append(homonym)
             else:
                 homonyms_not_relevant.append(homonym)
+
+        else:
+            # имеющие специальное примечание (".* <")
+            if title_form.note.startswith('.* <'):
+                string_form = ' '.join(filter(
+                    None,
+                    [
+                        title_form.name,
+                        title_form.idf,
+                        ' '.join(title_form.info),
+                        title_form.note.replace('.* <', '').strip()
+                    ]))
+                if string_form in replays_in_groups_spec_note:
+                    homonyms_spec_note_relevant.append(homonym)
+                else:
+                    homonyms_spec_note_not_relevant.append(homonym)
+
+            # НЕ имеющие специальное примечание (".* <")
+            else:
+                string_form = ' '.join(filter(
+                    None,
+                    [
+                        title_form.name,
+                        title_form.idf,
+                        ' '.join(title_form.info),
+                        title_form.note.replace('.*', '').strip()
+                    ]))
+                if string_form in replays_in_groups:
+                    homonyms_relevant.append(homonym)
+                else:
+                    homonyms_not_relevant.append(homonym)
 
     save_list_to_file(homonyms_spec_note_relevant,
                       'out/О-мы БС спец. прим. совпадают с Повторами.txt')
