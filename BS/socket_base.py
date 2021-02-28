@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 class SocketWordForm:
     def __init__(self, invisible,  name, root_index, idf, info: list,
-                 note, etml_note):
+                 note, etml_note, spec_note):
         self.__invisible = invisible
         self.__name = name
         self.__root_index = root_index
@@ -11,6 +11,7 @@ class SocketWordForm:
         self.__info = info
         self.__note = note
         self.__etml_note = etml_note
+        self.__spec_note = spec_note
 
     def __repr__(self):
         return ' '.join(filter(
@@ -23,6 +24,7 @@ class SocketWordForm:
                 ' '.join(self.__info),
                 self.__note,
                 self.__etml_note,
+                self.__spec_note,
             ]
         )).strip()
 
@@ -103,6 +105,14 @@ class SocketWordForm:
         self.__etml_note = et_note
 
     @property
+    def spec_note(self):
+        return self.__spec_note
+
+    @spec_note.setter
+    def spec_note(self, spec_note):
+        self.__spec_note = spec_note
+
+    @property
     def clean_string(self):
         return ' '.join(filter(
             None,
@@ -114,6 +124,7 @@ class SocketWordForm:
                 ' '.join(self.__info),
                 self.__note,
                 self.__etml_note,
+                self.__spec_note,
             ]
         )).strip()
 
@@ -127,6 +138,7 @@ class SocketWordForm:
             'info': self.__info,
             'note': self.__note,
             'etymological_note': self.__etml_note,
+            'special_note': self.__spec_note,
         })
 
     @property
@@ -139,6 +151,7 @@ class SocketWordForm:
             self.__info,
             self.__note,
             self.__etml_note,
+            self.__spec_note,
         ]
 
 

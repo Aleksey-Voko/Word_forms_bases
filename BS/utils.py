@@ -63,6 +63,15 @@ def save_bs_dicts_to_txt(in_dicts: list, f_name, encoding='cp1251'):
 
 
 def get_socket_word_form(src_socket_form):
+    # spec_note
+    if ' < ' in src_socket_form:
+        src_socket_form, src_spec_note = [
+            x.strip() for x in src_socket_form.split(' < ')
+        ]
+        spec_note = ' '.join(['<', src_spec_note])
+    else:
+        spec_note = ''
+
     # etml_note
     pattern = re.compile(r'^.+ (\*\?|\*\?\?|\*!|\*\*)$')
     result = re.search(pattern, src_socket_form)
@@ -129,7 +138,7 @@ def get_socket_word_form(src_socket_form):
         ))
 
     return SocketWordForm(invisible, name, root_index, idf, info, note,
-                          etml_note)
+                          etml_note, spec_note)
 
 
 def read_src_socket_bs(f_name: str, encoding='cp1251'):
