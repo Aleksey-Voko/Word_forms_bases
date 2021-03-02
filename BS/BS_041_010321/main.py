@@ -12,12 +12,24 @@ def compare_homonyms_spec_note():
 
     for homonyms in homonyms_bg:
         socket_form = get_socket_word_form(homonyms)
+
+        spec_note = socket_form.spec_note.replace('< ', '')
+        spec_note_socket_form = get_socket_word_form(spec_note)
+        spec_note = ' '.join(filter(None, [
+            spec_note_socket_form.invisible,
+            spec_note_socket_form.name,
+            spec_note_socket_form.root_index,
+            spec_note_socket_form.idf,
+            ' '.join(spec_note_socket_form.info),
+            spec_note_socket_form.note,
+        ]))
+
         string_form = ' '.join(filter(
             None, [
                 socket_form.name,
                 socket_form.idf,
                 ' '.join(socket_form.info),
-                socket_form.spec_note.replace('< ', '')
+                spec_note,
             ]
         ))
         homonyms_bg_str_form.append(string_form)
@@ -147,4 +159,4 @@ def get_multirooted_homonyms():
 
 
 if __name__ == '__main__':
-    get_multirooted_homonyms()
+    compare_homonyms_spec_note()
