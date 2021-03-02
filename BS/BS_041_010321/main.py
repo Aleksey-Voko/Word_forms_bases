@@ -16,7 +16,7 @@ def compare_homonyms_spec_note():
         spec_note = socket_form.spec_note.replace('< ', '')
         spec_note_socket_form = get_socket_word_form(spec_note)
         spec_note = ' '.join(filter(None, [
-            spec_note_socket_form.invisible,
+            # spec_note_socket_form.invisible,
             spec_note_socket_form.name,
             spec_note_socket_form.root_index,
             spec_note_socket_form.idf,
