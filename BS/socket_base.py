@@ -39,14 +39,42 @@ class SocketWordForm:
         return self_name != other_name
 
     def __gt__(self, other):
-        self_name = self.clean_string
-        other_name = other.clean_string
-        return self_name > other_name
+        self_form = ' '.join(filter(None, [
+            self.name.replace('*', '').lower(),
+            self.root_index,
+            self.idf,
+            ' '.join(self.info),
+            self.note,
+            self.etml_note,
+        ]))
+        other_form = ' '.join(filter(None, [
+            other.name.replace('*', '').lower(),
+            other.root_index,
+            other.idf,
+            ' '.join(other.info),
+            other.note,
+            other.etml_note,
+        ]))
+        return self_form > other_form
 
     def __lt__(self, other):
-        self_name = self.clean_string
-        other_name = other.clean_string
-        return self_name < other_name
+        self_form = ' '.join(filter(None, [
+            self.name.replace('*', '').lower(),
+            self.root_index,
+            self.idf,
+            ' '.join(self.info),
+            self.note,
+            self.etml_note,
+        ]))
+        other_form = ' '.join(filter(None, [
+            other.name.replace('*', '').lower(),
+            other.root_index,
+            other.idf,
+            ' '.join(other.info),
+            other.note,
+            other.etml_note,
+        ]))
+        return self_form < other_form
 
     @property
     def invisible(self):
@@ -97,12 +125,12 @@ class SocketWordForm:
         self.__note = note
 
     @property
-    def et_note(self):
+    def etml_note(self):
         return self.__etml_note
 
-    @et_note.setter
-    def et_note(self, et_note):
-        self.__etml_note = et_note
+    @etml_note.setter
+    def etml_note(self, etml_note):
+        self.__etml_note = etml_note
 
     @property
     def spec_note(self):
