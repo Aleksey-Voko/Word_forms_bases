@@ -1,6 +1,6 @@
 from BS.utils import (read_src_socket_bs, get_dicts_from_csv_file,
                       get_socket_word_form, get_string_list_from_file,
-                      save_list_to_file, read_src_bs)
+                      save_list_to_file, read_src_bs, get_bs_title_word_form)
 
 
 def ordinary_words_bg():
@@ -15,7 +15,7 @@ def ordinary_words_bg():
     multi_root_bg_forms = []
 
     for multi_root_word in multi_root_words:
-        for root_index_key in list(multi_root_word)[1:]:
+        for root_index_key in list(multi_root_word):
             if multi_root_word[root_index_key]:
                 multi_root_bg_forms.append(multi_root_word[root_index_key])
 
@@ -109,6 +109,8 @@ def ordinary_words_bs():
     # Повторы ост. совпадает с БС
     remaining_repetitions = get_string_list_from_file(
         'src_dict/Повторы ост. совпадает с БС.txt')
+    remaining_repetitions = [str(get_bs_title_word_form(x))
+                             for x in remaining_repetitions]
     exclusion_list += remaining_repetitions
 
     # Обычные слова БС
@@ -117,7 +119,7 @@ def ordinary_words_bs():
     for bs_str_form in bs_word_forms:
         if bs_str_form not in exclusion_list:
             ordinary_words_bs_list.append(bs_str_form)
-            print(bs_str_form)
+            # print(bs_str_form)
 
     save_list_to_file(ordinary_words_bs_list, 'out/Обычные слова БС.txt')
 
