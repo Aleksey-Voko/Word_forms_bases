@@ -1,8 +1,11 @@
+import string
+
 from BS.utils import (read_src_socket_bs, save_list_to_file, read_src_bs,
                       get_string_list_from_file,  get_socket_word_form,
                       get_bs_title_word_form)
 
 CYRILLIC = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+ALPHABET = CYRILLIC + string.ascii_uppercase
 
 
 def get_bg_abbreviation():
@@ -17,9 +20,9 @@ def get_bg_abbreviation():
                 if not word_form.invisible:
                     form_name = word_form.name.replace('*', '')
                     chars = set(form_name[:2])
-                    if all(map(lambda x: x in CYRILLIC, chars)):
+                    if all(map(lambda x: x in ALPHABET, chars)):
                         abbreviation_bg.append(str(word_form))
-                    elif form_name[0] in CYRILLIC:
+                    elif form_name[0] in ALPHABET:
                         capital_letter_bg.append(str(word_form))
 
     save_list_to_file(
@@ -43,9 +46,9 @@ def get_bs_abbreviation():
         title_form = group.title_word_form
         form_name = title_form.name.replace('*', '')
         chars = set(form_name[:2])
-        if all(map(lambda x: x in CYRILLIC, chars)):
+        if all(map(lambda x: x in ALPHABET, chars)):
             abbreviation_bs.append(str(title_form))
-        elif form_name[0] in CYRILLIC:
+        elif form_name[0] in ALPHABET:
             capital_letter_bs.append(str(title_form))
 
     save_list_to_file(
