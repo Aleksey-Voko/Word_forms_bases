@@ -10,7 +10,8 @@ def change_case():
         lower_words = []
         words = get_string_list_from_file(file_path, encoding='cp1251')
         for word in words:
-            lower_words.append(word.lower())
+            if word:
+                lower_words.append(word.lower())
         out_path = f'out/lst/{file_stem}.txt'
         save_list_to_file(lower_words, out_path, encoding='cp1251')
 
