@@ -208,6 +208,12 @@ def save_list_to_file(input_list: list, out_file: str, encoding='utf-8'):
             f_out.write(str(line) + '\n')
 
 
+def add_string_to_file(input_string: str, out_file: str, encoding='utf-8'):
+    Path(out_file).parent.mkdir(parents=True, exist_ok=True)
+    with open(Path(out_file), 'a', encoding=encoding) as f_out:
+        f_out.write(f'{input_string}\n')
+
+
 def get_dicts_from_csv_file(f_name, encoding='utf-8',
                             newline='', delimiter=','):
     with open(Path(f_name), encoding=encoding, newline=newline) as f_in:
