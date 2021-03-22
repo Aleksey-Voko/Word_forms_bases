@@ -65,8 +65,6 @@ def get_not_included_in_the_lists():
         for x in Path('src_dict/lst').glob('*')
     }
 
-    added_title_form = []
-
     for group in word_forms_bases:
         title_form = group.title_word_form
         info_list = title_form.info
@@ -75,6 +73,7 @@ def get_not_included_in_the_lists():
                 if idf in IDFS:
                     out_stem = ', '.join(IDFS[idf])
                     flag = True
+                    added_title_form = []
                     for f_stem in IDFS[idf]:
                         if str(title_form) in file_stems[f_stem]:
                             flag = False
