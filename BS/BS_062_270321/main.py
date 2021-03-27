@@ -29,8 +29,9 @@ def find_extra_lines(in_file, in_dir):
     files_path = [x for x in Path(in_dir).glob('*')]
     in_dir_lines = [x for x in get_file_lines(files_path)]
     in_lines = list(get_string_list_from_file(in_file))
-    extra_lines = [x for x in in_lines if x not in in_dir_lines]
-    save_list_to_file(extra_lines, f'out/Лишние {Path(in_file).stem}.txt')
+    extra_lines = [x for x in in_dir_lines if x not in in_lines]
+    if extra_lines:
+        save_list_to_file(extra_lines, f'out/Лишние {Path(in_file).stem}.txt')
 
 
 def get_no_full_form():
