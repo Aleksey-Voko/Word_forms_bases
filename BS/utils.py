@@ -1,4 +1,5 @@
 import csv
+import fileinput
 import re
 from pathlib import Path
 
@@ -212,6 +213,13 @@ def add_string_to_file(input_string: str, out_file: str, encoding='utf-8'):
     Path(out_file).parent.mkdir(parents=True, exist_ok=True)
     with open(Path(out_file), 'a', encoding=encoding) as f_out:
         f_out.write(f'{input_string}\n')
+
+
+def get_file_lines(file_list, mode='r', encoding='utf-8', errors=None):
+    hook = fileinput.hook_encoded(encoding=encoding, errors=errors)
+    with fileinput.input(files=file_list, mode=mode, openhook=hook) as f:
+        for ln in f:
+            yield ln.rstrip()
 
 
 def get_dicts_from_csv_file(f_name, encoding='utf-8',
