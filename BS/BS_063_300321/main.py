@@ -4,6 +4,8 @@ from pprint import pprint
 from BS.utils import (get_string_list_from_file, save_list_to_file,
                       get_bs_title_word_form, read_src_bs)
 
+IDENTIFIERS = ('сов', 'нес', '2в', 'пер', 'неп', 'б')
+
 
 def change_case():
     for file_path in Path('src_dict/lst').glob('*'):
@@ -25,7 +27,7 @@ def check_presence():
             x.name,
             ' '.join([
                 y for y in x.info
-                if y in ('сов', 'нес', 'пер', 'неп', 'б')
+                if y in IDENTIFIERS
             ])
         ])) for x in homonyms
     ]
@@ -36,7 +38,7 @@ def check_presence():
             x.title_word_form.name,
             ' '.join([
                 y for y in x.title_word_form.info
-                if y in ('сов', 'нес', 'пер', 'неп', 'б')
+                if y in IDENTIFIERS
             ])
         ])) for x in word_forms_bases
     ]
@@ -63,7 +65,7 @@ def check_presence():
                             group.title_word_form.name,
                             ' '.join([
                                 y for y in group.title_word_form.info
-                                if y in ('сов', 'нес', 'пер', 'неп', 'б')
+                                if y in IDENTIFIERS
                             ])
                         ])):
                             nouns.append(str(group.title_word_form))
