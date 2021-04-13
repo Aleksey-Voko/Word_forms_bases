@@ -62,13 +62,13 @@ def get_homonyms_bs():
                     homonyms_not_relevant.append(homonym)
 
     save_list_to_file(homonyms_spec_note_relevant,
-                      'out/О-мы БС спец. прим. совпадают с Повторами.txt')
+                      'out/О-мы БС спец. прим. совпадают с Слова, омонимичные повторам.txt')
     save_list_to_file(homonyms_spec_note_not_relevant,
-                      'out/О-мы БС спец. прим. не совпадают с Повторами.txt')
+                      'out/О-мы БС спец. прим. не совпадают с Слова, омонимичные повторам.txt')
     save_list_to_file(homonyms_relevant,
-                      'out/О-мы БС совпадают с Повторами.txt')
+                      'out/О-мы БС совпадают с Слова, омонимичные повторам.txt')
     save_list_to_file(homonyms_not_relevant,
-                      'out/О-мы БС не совпадают с Повторами.txt')
+                      'out/О-мы БС не совпадают с Слова, омонимичные повторам.txt')
 
 
 if __name__ == '__main__':
